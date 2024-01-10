@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 
 
 function DonationItem(props) {
+    // states to keep one donation item data and validation data
     const [item, setItem]= useState({name: props.name, type:props.type,amount: props.amount })
     const [errorSelect, setErrorSelect]= useState(false);
     const [errorNumber, setErrorNumber]= useState(false);
@@ -25,6 +26,7 @@ function DonationItem(props) {
       setItem({...item, amount:e.target.value});
     }
     
+    // updating errors status by updating input values
     useEffect(() => {
       if (item.type == 'all' || item.type == "")
         setErrorSelect(true);
@@ -35,6 +37,7 @@ function DonationItem(props) {
       else setErrorName(false);
     }, [item]);
 
+    // check validation by changing errors
     useEffect(() => {
       if (!errorName && !errorNumber && !errorSelect)
         setValidated(true);
@@ -65,6 +68,7 @@ function DonationItem(props) {
             style={{margin:'20px 20px'}}
             helperText={errorName ? "Please enter name" : ""}
           />
+
           <TextField
             required
             error={errorNumber}
@@ -74,7 +78,7 @@ function DonationItem(props) {
             onChange={(e) => handleChangeAmount(e)}
             style={{margin:'20px 20px'}}
           />
-        
+
           <Button 
             variant="outlined" 
             disabled ={!validated}
