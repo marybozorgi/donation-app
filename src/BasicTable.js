@@ -39,7 +39,7 @@ export default function BasicTable(props) {
                 </TableCell>
                 <TableCell align="right">{row.type}</TableCell>
                 <TableCell align="right">{row.amount}</TableCell>
-                <TableCell align="right">{row.date}</TableCell>
+                <TableCell align="right">{String(row.date)}</TableCell>
               </TableRow>
             ))}
           </TableBody>

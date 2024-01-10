@@ -1,4 +1,5 @@
 import * as React from 'react';
+import dayjs from 'dayjs';
 import { useEffect } from "react";
 import Stack from '@mui/material/Stack';
 import BasicSelect from './BasicSelect';
@@ -35,18 +36,18 @@ function createData(
 
 //default donation data
 const rows = [
-  createData(1,'Ali', 'money', 200, '01-12-2023'),
-  createData(2,'Alex', 'money', 300, '04-12-2023'),
-  createData(3, 'Mary', 'money', 100, '08-12-2023'),
-  createData(4, 'Sam', 'cloth', 15, '15-12-2023'),
-  createData(5, 'Max', 'food', 3, '01-11-2023'),
+  createData(1,'Ali', 'money', 200, dayjs('2022-04-17')),
+  createData(2,'Alex', 'money', 300, dayjs('2022-05-10')),
+  createData(3, 'Mary', 'money', 100, dayjs('2022-08-19')),
+  createData(4, 'Sam', 'cloth', 15, dayjs('2023-03-06')),
+  createData(5, 'Max', 'food', 3, dayjs('2023-08-29')),
 ];
 
 function App() {
 
   // states defined for Modal
   const [open, setOpen] = React.useState(false);
-  const [item, setItem] = React.useState({name:"", type:"", amount:0});
+  const [item, setItem] = React.useState({name:"", type:"", amount:0, date:""});
   const handleOpen = () => {setOpen(true);}
   const handleClose = () => setOpen(false);
   
@@ -66,11 +67,11 @@ function App() {
 
   const handleEdit = (e) => {
     handleOpen();
-    setItem({name:e.name, type:e.type, amount:e.amount})
+    setItem({name:e.name, type:e.type, amount:e.amount, date:e.date})
   }
 
   const handleSubmit = (item) => {
-  setDonations([ ...donations, createData(uuid(), item.name, item.type, parseInt(item.amount), "12-12-2023")]);
+  setDonations([ ...donations, createData(uuid(), item.name, item.type, parseInt(item.amount), item.date)]);
   }
 
   const handleEditSubmit = (item) => {
@@ -102,9 +103,11 @@ function App() {
     <div className="App">
 
         <h3>Time to Donate!!</h3>
-        <DonationItem name= "" type="" amount="" onClick= {(item) => handleSubmit(item)}/>
+        <DonationItem name= "" type="" amount="" date="" onClick= {(item) => handleSubmit(item)}/>
 
         <h3>Donation List</h3>
+        <p>Please select the donation type dropdown to filter dontion list</p>
+        <p>records could be delete/edit by icons</p>
         <BasicSelect onClick={(e) => handleClick(e)}/>
         <BasicTable donations={category} onDelete= {(e) => handleDelete(e)}  onEdit= {(e) => handleEdit(e)}/>
         <h3>Total Donationed </h3>
@@ -125,7 +128,7 @@ function App() {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Edit
             </Typography>
-            <DonationItem name= {item.name} type={item.type} amount={item.amount} onClick= {(item) => handleEditSubmit(item)}/>
+            <DonationItem name= {item.name} type={item.type} amount={item.amount} date={item.date} onClick= {(item) => handleEditSubmit(item)}/>
           </Box>
       </Modal>
     </div>
